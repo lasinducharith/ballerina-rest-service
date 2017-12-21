@@ -1,7 +1,7 @@
 import ballerina.net.http;
 
 @http:configuration {basePath:"/hello"}
-service<http> helloWorld {
+service<http> helloService {
 
     int i = 1;
     @http:resourceConfig {

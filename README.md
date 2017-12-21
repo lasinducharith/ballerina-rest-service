@@ -44,7 +44,7 @@ hello-ballerina
 ```
 
 ##### helloService.bal
-```
+```ballerina
 package services;
 
 import ballerina.net.http;
@@ -140,7 +140,7 @@ hello-ballerina
 ```
 
 ##### helloService_test.bal
-```
+```ballerina
 package services;
 
 import ballerina.test;

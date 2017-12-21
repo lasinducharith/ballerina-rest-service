@@ -1,3 +1,5 @@
+package services;
+
 import ballerina.net.http;
 
 @http:configuration {basePath:"/hello"}

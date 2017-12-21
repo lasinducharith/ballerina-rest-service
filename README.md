@@ -1,6 +1,6 @@
 # Ballerina RESTful Web Service
 Following guide walks you through the step by step process of building a RESTful Web Service with Ballerina.
-Guide also explains the development and deployment workflow of a standard Ballerina Service in-detail.
+It also explains the development and deployment workflow of a standard Ballerina Service in-detail.
 
 ## What you'll build
 You’ll build a Hello service that will accept HTTP GET requests at:
@@ -20,7 +20,7 @@ The name parameter value overrides the default value of "Ballerina" and is refle
 {"id":1,"content":"Hello, User!"}
 ```
 ## Before you begin:  What you'll need
-- About 15 minutes
+- About 30 minutes
 - A favorite text editor or IDE
 - JDK 1.8 or later
 - Ballerina Distribution (Install Instructions:  https://ballerinalang.org/docs/quick-tour/quick-tour/#install-ballerina)
@@ -35,7 +35,7 @@ Download and unzip the source repository for this guide in https://github.com/la
 Skip "Writing the Service" section
 
 ## Writing the Service
-Create a new directory(Ex: hello-ballerina). Inside the directory,create a package(Ex: service). Package is another directory in the project hierarchy.
+Create a new directory(Ex: hello-ballerina). Inside the directory, create a package(Ex: services). Ballerina package is another directory in the project hierarchy.
 Create a new file in your text editor and copy following content. Save the file with .bal extension (ex:helloService.bal) 
 ```
 hello-ballerina
@@ -76,7 +76,7 @@ Ballerina supports writing RESTFul services according to JAX-RS specification. B
 Post annotation constrains the resource only to accept post requests. Similarly, for each HTTP verb there are different annotations. Path attribute associates a sub-path to resource.
 
 Ballerina supports extracting values both from PathParam and QueryParam. Query Parameters are read from a map.
-A string template **responseTemplate** holds the response string. In ballerina you could define a response structure or a json inline in the code.
+A string template **responseTemplate** holds the response string. In ballerina you could define a response structure or a json inline in the code. There is an incremental counter which returns the *id*, in the response.
 
 ### Running Service in Command-line
 You can run the ballerina service/application from the command line. Navigate to hello-ballerina directory and execute following command to compile and execute the ballerina program.
@@ -86,7 +86,7 @@ $ballerina run services/
 ```
 
 Following commands will compile the ballerina program and run. Note that compiler will create a **.balx** file, which is the executable binary of the service/application upon execution of **build** command.
-The executable will be created with name <package_name>.balx
+The executable will be created with name <package_name>.balx. The balx file will package all the ballerina files inside the package/directory to a single executable binary file.
 
 ```
 $ballerina build services/
@@ -100,15 +100,19 @@ ballerina: started HTTP/WS server connector 0.0.0.0:9090
 
 ### Running Service in Ballerina Composer
 Start Composer https://ballerinalang.org/docs/quick-tour/quick-tour/#run-the-composer
-Navigate to File -> Open Program Directory, and pick the project folder (hello-ballerina). Navigate to helloService.bal.
+Navigate to File -> Open Program Directory, and pick the project folder (hello-ballerina). Click on helloService.bal.
 
-Click on **Run**(Ctrl+Shift+R) button in the tool bar.
+Click on **Run**(Ctrl+Shift+R) button in the tool bar, to start the service
 
 ![alt text](https://github.com/lasinducharith/ballerina-rest-service/raw/master/images/helloService_Composer.png)
 
 
 ### Running in Intellij IDEA
-<TODO>
+Refer https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started to setup your IntelliJ IDEA environment with Ballerina.
+Open hello-ballerina project in IntelliJ IDEA and run helloService.bal
+
+![alt text](https://github.com/lasinducharith/ballerina-rest-service/raw/master/images/helloService_IDEA.png)
+
 
 ### Running in VSCode
 <TODO>
@@ -126,8 +130,8 @@ Provide a name query parameter with http://localhost:9090/hello?name=User. Notic
 
 ## Writing Test cases
 
-Create a new file inside services directory with name helloService_test.bal. Make sure your test file ends with _test.bal
-Refer Testerina test framework for more information https://github.com/ballerinalang/testerina
+Create a new ballerina file inside *services* directory (Ex:helloService_test.bal). Make sure your test file ends with _test.bal to mark it as a testerina file.
+Refer Testerina Test framework for more information https://github.com/ballerinalang/testerina
 ```
 hello-ballerina
    └── services
@@ -156,8 +160,8 @@ function testHelloService () {
 }
 ```
 
-The test case start the helloService and sends a sample get request to the HTTP endpoint.
-It also asserts if the response payload matches the expected result.
+The test package contains functions to start a service and assert results. The test case start the helloService and sends a sample get request to the HTTP endpoint.
+It also asserts if the response payload matches the expected result, using test function **assertStringEquals**.
 
 #### Running Test case
 
@@ -172,6 +176,13 @@ ballerina: started HTTP/WS server connector 0.0.0.0:9090
 
 result: 
 tests run: 1, passed: 1, failed: 0
+```
+
+##### Running Test case using .balx
+
+```
+$ballerina build services/
+$ballerina test services.balx
 ```
 
 ## Creating Documentation

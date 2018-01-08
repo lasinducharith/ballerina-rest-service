@@ -10,8 +10,12 @@ function testHelloService () {
 
     http:Request req = {};
     http:Response resp = {};
+    // Start helloService
     string helloServiceURL = test:startService("helloService");
+    // Send a GET request to helloService
     resp, _ = httpEndpoint.get("?name=User", req);
-    test:assertStringEquals(resp.getStringPayload(), "{\"id\":1,\"content\":\"Hello, User!\"}", "Response mismatch!");
+    // Assert Response
+    test:assertStringEquals(resp.getStringPayload(), "{\"id\":1,\"content\":\"Hello, User!\"}",
+                            "Response mismatch!");
 
 }

@@ -1,10 +1,10 @@
 # Ballerina RESTful Web Service
 Following guide walks you through the step by step process of building a RESTful Web Service with Ballerina.
-It also explains the development and deployment workflow of a standard Ballerina Service in-detail.
+It also explains the development and deployment workflow of a standard Ballerina Service.
 
-- [What you'll build](#What-you-ll-build)
-- [Before you begin:  What you'll need](#what-you-ll-need)
-- [How to complete this guide](#how-to-complete-this guide)
+- [What we'll build](#What-we-ll-build)
+- [Before beginning:  What we'll need](#what-we-ll-need)
+- [How to complete this guide](#how-to-complete-this-guide)
 - [Writing the Service](#writing-the-service)
 - [Running Service in Command-line](#running-in-command-line)
 - [Running Service in Ballerina Composer](#running-in-composer)
@@ -17,8 +17,8 @@ It also explains the development and deployment workflow of a standard Ballerina
 - [Running Service on Cloud Foundry](#running-on-cloud-foundry)
 
 
-## <a name="What-you-ll-build"></a> What you'll build
-You’ll build a Hello service that will accept HTTP GET requests at:
+## <a name="What-we-ll-build"></a> What we'll build
+We’ll build a Hello service that will accept HTTP GET requests at:
 ```
 http://localhost:9090/hello
 ```
@@ -34,20 +34,24 @@ The name parameter value overrides the default value of "Ballerina" and is refle
 ```
 {"id":1,"content":"Hello, User!"}
 ```
-## <a name="what-you-ll-need"></a> Before you begin:  What you'll need
-- About 30 minutes
+## <a name="what-we-ll-need"></a> Before beginning:  What we'll need
+- About 45 minutes
 - A favorite text editor or IDE
 - JDK 1.8 or later
 - Ballerina Distribution (Install Instructions:  https://ballerinalang.org/docs/quick-tour/quick-tour/#install-ballerina)
+- Docker (Follow instructions in https://docs.docker.com/engine/installation/)
+- Ballerina Composer (optional). Refer instructions in https://ballerinalang.org/docs/quick-tour/quick-tour/#run-the-composer
+- Intellij IDEA (optional). https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started
+- Testerina (Refer: https://github.com/ballerinalang/testerina)
+- Container-support (Refer: https://github.com/ballerinalang/container-support)
 - You can import or write the code straight on your text editor/Ballerina Composer
 
 
-## <a name="how-to-complete-this guide"></a> How to complete this guide
+## <a name="how-to-complete-this-guide"></a> How to complete this guide
 You can either start writing the service in Ballerina from scratch or by cloning the service to continue with the next steps.
 
-To skip the basics:
-Download and unzip the source repository for this guide in https://github.com/lasinducharith/ballerina-rest-service
-Skip "Writing the Service" section
+To skip the basics, download and unzip the source repository for this guide in https://github.com/lasinducharith/ballerina-rest-service.
+Skip "Writing the Service" section.
 
 ## <a name="writing-the-service"></a> Writing the Service
 Create a new directory(Ex: hello-ballerina). Inside the directory, create a package(Ex: services). Ballerina package is another directory in the project hierarchy.
@@ -119,7 +123,13 @@ ballerina: started HTTP/WS server connector 0.0.0.0:9090
 ```
 
 ## <a name="running-in-composer"></a> Running Service in Ballerina Composer
+(This is an optional step to familiarize Ballerina Composer)
+
+The Ballerina Composer provides a flexible and powerful browser-based tool for creating your Ballerina programs. 
+This section only describes how to open and execute already created .bal files, but ballerina composer is intended to be used for visually developing an integration. 
+
 Start Composer https://ballerinalang.org/docs/quick-tour/quick-tour/#run-the-composer
+
 Navigate to File -> Open Program Directory, and pick the project folder (hello-ballerina). Click on helloService.bal.
 
 Click on **Run**(Ctrl+Shift+R) button in the tool bar, to start the service
@@ -128,7 +138,9 @@ Click on **Run**(Ctrl+Shift+R) button in the tool bar, to start the service
 
 
 ## <a name="running-in-intellij"></a> Running in Intellij IDEA
-Refer https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started to setup your IntelliJ IDEA environment with Ballerina.
+(This is an optional step to familiarize Ballerina Intellij IDEA Plugin)
+
+Refer https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started to setup your IntelliJ IDEA environment for Ballerina.
 Open hello-ballerina project in IntelliJ IDEA and run helloService.bal
 
 ![alt text](https://github.com/lasinducharith/ballerina-rest-service/raw/master/images/helloService_IDEA.png)
@@ -216,6 +228,8 @@ $ballerina test services.balx
 
 Container support for Ballerina provides the implementation for packaging Ballerina programs with Docker using **ballerina docker** command.
 Refer https://github.com/ballerinalang/container-support for setting up ballerina container-support.
+
+Notice the docker **image name** and **versions** are helloservice and 1.0
 
 
 ```

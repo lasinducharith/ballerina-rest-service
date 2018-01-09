@@ -13,8 +13,8 @@ It also explains the development and deployment workflow of a standard Ballerina
 - [Test the Service](#test-service)
 - [Writing Test cases](#writing-test-cases)
 - [Creating Documentation](#creating-documentation)
-- [Running Service on Docker](#running-on-docker)
-- [Running Service on Cloud Foundry](#running-on-cloud-foundry)
+- [Deploying Service on Docker](#deploying-on-docker)
+- [Deploying Service on Cloud Foundry](#deploying-on-cloud-foundry)
 
 
 ## <a name="What-we-ll-build"></a> What we'll build
@@ -224,7 +224,7 @@ $ballerina test services.balx
 ## <a name="creating-documentation"></a> Creating Documentation
 <TODO>
 
-## <a name="running-on-docker"></a> Running Service on Docker
+## <a name="deploying-on-docker"></a> Deploying Service on Docker
 
 Container support for Ballerina provides the implementation for packaging Ballerina programs with Docker using **ballerina docker** command.
 Refer https://github.com/ballerinalang/container-support for setting up ballerina container-support.
@@ -269,7 +269,7 @@ ballerina: started HTTP/WS server connector 0.0.0.0:9090
 ```
 
 
-## <a name="running-on-cloud-foundry"></a> Running Service on Cloud Foundry
+## <a name="deploying-on-cloud-foundry"></a> Deploying Service on Cloud Foundry
 <TODO>
 
 

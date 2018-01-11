@@ -1,42 +1,36 @@
-# Ballerina RESTful Web Service
+# Developing and Deploying a Ballerina RESTful Web Service
 Following guide walks you through the step by step process of building a RESTful Web Service with Ballerina.
-It also explains the development and deployment workflow of a standard Ballerina Service.
+It also explains the development and deployment workflow of a simple standard Ballerina Service.
 
 - [What we'll build](#What-we-ll-build)
 - [Before beginning:  What we'll need](#what-we-ll-need)
-- [How to complete this guide](#how-to-complete-this-guide)
 - [Writing the Service](#writing-the-service)
-- [Running Service in Command-line](#running-in-command-line)
-- [Running Service in Ballerina Composer](#running-in-composer)
-- [Running in Intellij IDEA](#running-in-intellij)
-- [Running in VSCode](#running-in-vscode)
-- [Test the Service](#test-service)
-- [Writing Test cases](#writing-test-cases)
+- [Running the Service](#running-the-service)
+  - [Running Service in Command-line](#running-in-command-line)
+  - [Running Service in Ballerina Composer](#running-in-composer)
+  - [Running in Intellij IDEA](#running-in-intellij)
+  - [Running in VSCode](#running-in-vscode)
+- [Testing the Service](#testing-service)
+  - [Invoking the service](#invoking-the-service)
+  - [Writing Test cases](#writing-test-cases)
 - [Creating Documentation](#creating-documentation)
-- [Deploying Service on Docker](#deploying-on-docker)
-- [Deploying Service on Cloud Foundry](#deploying-on-cloud-foundry)
+- [Deploying the Service](#deploying-the-service)  
+  - [Deploying on Docker](#deploying-on-docker)
+  - [Deploying on Cloud Foundry](#deploying-on-cloud-foundry)
 
 
 ## <a name="What-we-ll-build"></a> What we'll build
 We’ll build a Hello service that will accept HTTP GET requests at:
 ```
-http://localhost:9090/hello
+http://localhost:9090/helloService/sayHello
 ```
-and respond with a JSON representation of a greeting
+and respond with a JSON representation of a greeting with a request ID.
 ```
 {"id":1,"content":"Hello, Ballerina!"}
 ```
-You can customize the greeting with an optional name parameter in the query string:
-```
-http://localhost:9090/hello?name=User
-```
-The name parameter value overrides the default value of "Ballerina" and is reflected in the response:
-```
-{"id":1,"content":"Hello, User!"}
-```
+
 ## <a name="what-we-ll-need"></a> Before beginning:  What we'll need
 - About 45 minutes
-- A favorite text editor or IDE
 - JDK 1.8 or later
 - Ballerina Distribution (Install Instructions:  https://ballerinalang.org/docs/quick-tour/quick-tour/#install-ballerina)
 - Docker (Follow instructions in https://docs.docker.com/engine/installation/)
@@ -46,20 +40,13 @@ The name parameter value overrides the default value of "Ballerina" and is refle
 - Container-support (Refer: https://github.com/ballerinalang/container-support)
 - You can import or write the code straight on your text editor/Ballerina Composer
 
-
-## <a name="how-to-complete-this-guide"></a> How to complete this guide
-You can either start writing the service in Ballerina from scratch or by cloning the service to continue with the next steps.
-
-To skip the basics, download and unzip the source repository for this guide in https://github.com/lasinducharith/ballerina-rest-service.
-Skip "Writing the Service" section.
-
 ## <a name="writing-the-service"></a> Writing the Service
 Create a new directory(Ex: hello-ballerina). Inside the directory, create a package(Ex: services). Ballerina package is another directory in the project hierarchy.
 Create a new file in your text editor and copy following content. Save the file with .bal extension (ex:helloService.bal) 
 ```
 hello-ballerina
    └── services
-       └── helloService.bal
+       └── hello-service.bal
 ```
 
 ##### helloService.bal
@@ -68,27 +55,12 @@ package services;
 
 import ballerina.net.http;
 
-@http:configuration {basePath:"/hello"}
 service<http> helloService {
 
     int i = 1;
-    @http:resourceConfig {
-        methods:["GET"],
-        path:"/"
-    }
-
     resource sayHello (http:Request request, http:Response response) {
-        string name = "Ballerina";
-        // Retrieve query parameters in the request
-        map params = request.getQueryParams();
-        // Check for query parameter 'name'
-        if (params["name"] != null) {
-            name, _ = (string)params["name"];
-        }
-        // Use of string template to generate the response
-        string responseTemplate = string `Hello, {{name}}!`;
         // Set response json payload before sending out
-        response.setJsonPayload({"id":i, "content":responseTemplate});
+        response.setJsonPayload({"id":i, "content":"Hello Ballerina!"});
         // Increment request count
         i = i + 1;
         _ = response.send();
@@ -99,10 +71,11 @@ Services represent collections of network accessible entry points in Ballerina. 
 Ballerina supports writing RESTFul services according to JAX-RS specification. BasePath, Path and HTTP verb annotations such as POST, GET, etc can be used to constrain your service in RESTful manner.
 Post annotation constrains the resource only to accept post requests. Similarly, for each HTTP verb there are different annotations. Path attribute associates a sub-path to resource.
 
-Ballerina supports extracting values both from PathParam and QueryParam. Query Parameters are read from a map.
-A string template **responseTemplate** holds the response string. In ballerina you could define a response structure or a json inline in the code. There is an incremental counter which returns the *id*, in the response.
+There is an incremental counter which returns the *id*, in the response.
 
-## <a name="running-in-command-line"></a> Running Service in Command-line
+## <a name="running-the-service"></a> Running the Service
+
+### <a name="running-in-command-line"></a> Running Service in Command-line
 You can run the ballerina service/application from the command line. Navigate to hello-ballerina directory and execute following command to compile and execute the ballerina program.
 
 ```
@@ -122,7 +95,7 @@ ballerina: deploying service(s) in 'services'
 ballerina: started HTTP/WS server connector 0.0.0.0:9090
 ```
 
-## <a name="running-in-composer"></a> Running Service in Ballerina Composer
+### <a name="running-in-composer"></a> Running Service in Ballerina Composer
 (This is an optional step to familiarize Ballerina Composer)
 
 The Ballerina Composer provides a flexible and powerful browser-based tool for creating your Ballerina programs. 
@@ -137,7 +110,7 @@ Click on **Run**(Ctrl+Shift+R) button in the tool bar, to start the service
 ![alt text](https://github.com/lasinducharith/ballerina-rest-service/raw/master/images/helloService_Composer.png)
 
 
-## <a name="running-in-intellij"></a> Running in Intellij IDEA
+### <a name="running-in-intellij"></a> Running in Intellij IDEA
 (This is an optional step to familiarize Ballerina Intellij IDEA Plugin)
 
 Refer https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started to setup your IntelliJ IDEA environment for Ballerina.
@@ -146,29 +119,28 @@ Open hello-ballerina project in IntelliJ IDEA and run helloService.bal
 ![alt text](https://github.com/lasinducharith/ballerina-rest-service/raw/master/images/helloService_IDEA.png)
 
 
-## <a name="running-in-vscode"></a> Running in VSCode
-<TODO>
+### <a name="running-in-vscode"></a> Running in VSCode
+(This is an optional step to familiarize Ballerina VSCode Plugin)
+At the moment VSCode cannot run a ballerina program from the IDE.
 
+## <a name="testing-service"></a> Testing the service
 
-## <a name="test-service"></a> Test the Service
-Now that the service is up, visit http://localhost:9090/hello where you see:
+### <a name="invoking-the-service"></a> Invoking the Service
+Now that the service is up, visit http://localhost:9090/helloService/sayHello where you see:
 ```
 {"id":1,"content":"Hello, Ballerina!"}
 ```
-Provide a name query parameter with http://localhost:9090/hello?name=User. Notice following response.
-```
-{"id":1,"content":"Hello, User!"}
-```
+If not send a GET request from curl/postman to test if the service is running.
 
-## <a name="writing-test-cases"></a> Writing Test cases
+### <a name="writing-test-cases"></a> Writing Test cases
 
 Create a new ballerina file inside *services* directory (Ex:helloService_test.bal). Make sure your test file ends with _test.bal to mark it as a testerina file.
 Refer Testerina Test framework for more information https://github.com/ballerinalang/testerina
 ```
 hello-ballerina
    └── services
-       ├── helloService.bal
-       └── helloService_test.bal
+       ├── hello-service.bal
+       └── hello-service_test.bal
 ```
 
 ##### helloService_test.bal
@@ -179,8 +151,9 @@ import ballerina.test;
 import ballerina.net.http;
 
 function testHelloService () {
+
     endpoint<http:HttpClient> httpEndpoint {
-        create http:HttpClient("http://localhost:9090/hello", {});
+        create http:HttpClient("http://localhost:9090/helloService", {});
     }
 
     http:Request req = {};
@@ -188,9 +161,9 @@ function testHelloService () {
     // Start helloService
     string helloServiceURL = test:startService("helloService");
     // Send a GET request to helloService
-    resp, _ = httpEndpoint.get("?name=User", req);
+    resp, _ = httpEndpoint.get("/sayHello", req);
     // Assert Response
-    test:assertStringEquals(resp.getStringPayload(), "{\"id\":1,\"content\":\"Hello, User!\"}",
+    test:assertStringEquals(resp.getStringPayload(), "{\"id\":1,\"content\":\"Hello Ballerina!\"}",
                             "Response mismatch!");
 
 }
@@ -224,7 +197,7 @@ $ballerina test services.balx
 ## <a name="creating-documentation"></a> Creating Documentation
 <TODO>
 
-## <a name="deploying-on-docker"></a> Deploying Service on Docker
+## <a name="deploying-on-docker"></a> Deploying on Docker
 
 Container support for Ballerina provides the implementation for packaging Ballerina programs with Docker using **ballerina docker** command.
 Refer https://github.com/ballerinalang/container-support for setting up ballerina container-support.
@@ -259,7 +232,7 @@ Make requests using the format [curl -X <http-method> http://localhost:34361/<se
 
 ```
 
-Make sure you have no services already started in port 9090. Now execute **docker run** command to start the service. Follow the previous section 'Test the Service' to see if the service is running on container.
+Make sure you have no services already started in port 9090. Now execute **docker run** command to start the service. Follow the previous section [Invoking the Service](#invoking-the-service) to see if the service is running on container.
 
 
 ```
@@ -269,7 +242,7 @@ ballerina: started HTTP/WS server connector 0.0.0.0:9090
 ```
 
 
-## <a name="deploying-on-cloud-foundry"></a> Deploying Service on Cloud Foundry
+## <a name="deploying-on-cloud-foundry"></a> Deploying on Cloud Foundry
 <TODO>
 
 

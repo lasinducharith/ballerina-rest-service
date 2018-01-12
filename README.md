@@ -29,6 +29,8 @@ and respond with a JSON representation of a greeting with a request ID.
 {"id":1,"content":"Hello, Ballerina!"}
 ```
 
+In the next steps, we'll run, test, document and deploy the service to cover the complete workflow of developing and deploying an service.
+
 ## <a name="what-we-ll-need"></a> Before beginning:  What we'll need
 - About 45 minutes
 - JDK 1.8 or later
@@ -38,7 +40,6 @@ and respond with a JSON representation of a greeting with a request ID.
 - Intellij IDEA (optional). https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started
 - Testerina (Refer: https://github.com/ballerinalang/testerina)
 - Container-support (Refer: https://github.com/ballerinalang/container-support)
-- You can import or write the code straight on your text editor/Ballerina Composer
 
 ## <a name="writing-the-service"></a> Writing the Service
 Create a new directory(Ex: hello-ballerina). Inside the directory, create a package(Ex: services). Ballerina package is another directory in the project hierarchy.
@@ -121,6 +122,7 @@ Open hello-ballerina project in IntelliJ IDEA and run helloService.bal
 
 ### <a name="running-in-vscode"></a> Running in VSCode
 (This is an optional step to familiarize Ballerina VSCode Plugin)
+
 At the moment VSCode cannot run a ballerina program from the IDE.
 
 ## <a name="testing-service"></a> Testing the service
@@ -195,9 +197,13 @@ $ballerina test services.balx
 ```
 
 ## <a name="creating-documentation"></a> Creating Documentation
-<TODO>
 
-## <a name="deploying-on-docker"></a> Deploying on Docker
+Cannot generate docs for files inside a ballerina package
+https://github.com/ballerinalang/docerina/issues/143
+
+
+## <a name="deploying-the-service"></a> Deploying the Service
+### <a name="deploying-on-docker"></a> Deploying on Docker
 
 Container support for Ballerina provides the implementation for packaging Ballerina programs with Docker using **ballerina docker** command.
 Refer https://github.com/ballerinalang/container-support for setting up ballerina container-support.
@@ -242,7 +248,7 @@ ballerina: started HTTP/WS server connector 0.0.0.0:9090
 ```
 
 
-## <a name="deploying-on-cloud-foundry"></a> Deploying on Cloud Foundry
+### <a name="deploying-on-cloud-foundry"></a> Deploying on Cloud Foundry
 <TODO>
 
 

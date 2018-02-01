@@ -4,19 +4,19 @@ It also explains the development and deployment workflow of a simple standard Ba
 
 - [What we'll build](#What-we-ll-build)
 - [Before beginning:  What we'll need](#what-we-ll-need)
+- [Setting up tools](#setting-up-tools)
+  - [Ballerina Composer](#ballerina-composer)
+  - [Intellij Idea](#intellij-idea)
+  - [VSCode](#vscode)
 - [Writing the Service](#writing-the-service)
 - [Running the Service](#running-the-service)
-  - [Running Service in Command-line](#running-in-command-line)
-  - [Running Service in Ballerina Composer](#running-in-composer)
-  - [Running in Intellij IDEA](#running-in-intellij)
-  - [Running in VSCode](#running-in-vscode)
 - [Testing the Service](#testing-service)
   - [Invoking the service](#invoking-the-service)
-  - [Writing Test cases](#writing-test-cases)
+  - [Writing test cases](#writing-test-cases)
 - [Creating Documentation](#creating-documentation)
 - [Deploying the Service](#deploying-the-service)  
   - [Deploying on Docker](#deploying-on-docker)
-  - [Deploying on Cloud Foundry](#deploying-on-cloud-foundry)
+  - [Deploying on Kubernetes](#deploying-on-kubernetes)
 
 
 ## <a name="What-we-ll-build"></a> What we'll build
@@ -40,6 +40,22 @@ In the next steps, we'll run, test, document and deploy the service to cover the
 - Intellij IDEA (optional). https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started
 - Testerina (Refer: https://github.com/ballerinalang/testerina)
 - Container-support (Refer: https://github.com/ballerinalang/container-support)
+- Docerina (Refer: https://github.com/ballerinalang/docerina)
+
+## <a name="setting-up-tools"></a> Setting up tools
+
+### <a name="ballerina-composer"></a> Ballerina Composer
+
+The Ballerina Composer provides a flexible and powerful browser-based tool for creating your Ballerina programs. 
+This section only describes how to open and execute already created .bal files, but ballerina composer is intended to be used for visually developing an integration. 
+
+Start Composer https://ballerinalang.org/docs/quick-tour/quick-tour/#run-the-composer
+
+### <a name="intellij-idea"></a> Intellij IDEA
+
+Refer https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started to setup your IntelliJ IDEA environment for Ballerina.
+
+### <a name="vscode"></a> VSCode
 
 ## <a name="writing-the-service"></a> Writing the Service
 Create a new directory(Ex: hello-ballerina). Inside the directory, create a package(Ex: services). Ballerina package is another directory in the project hierarchy.
@@ -76,7 +92,6 @@ There is an incremental counter which returns the *id*, in the response.
 
 ## <a name="running-the-service"></a> Running the Service
 
-### <a name="running-in-command-line"></a> Running Service in Command-line
 You can run the ballerina service/application from the command line. Navigate to hello-ballerina directory and execute following command to compile and execute the ballerina program.
 
 ```
@@ -95,35 +110,6 @@ Console Output
 ballerina: deploying service(s) in 'services'
 ballerina: started HTTP/WS server connector 0.0.0.0:9090
 ```
-
-### <a name="running-in-composer"></a> Running Service in Ballerina Composer
-(This is an optional step to familiarize Ballerina Composer)
-
-The Ballerina Composer provides a flexible and powerful browser-based tool for creating your Ballerina programs. 
-This section only describes how to open and execute already created .bal files, but ballerina composer is intended to be used for visually developing an integration. 
-
-Start Composer https://ballerinalang.org/docs/quick-tour/quick-tour/#run-the-composer
-
-Navigate to File -> Open Program Directory, and pick the project folder (hello-ballerina). Click on helloService.bal.
-
-Click on **Run**(Ctrl+Shift+R) button in the tool bar, to start the service
-
-![alt text](https://github.com/lasinducharith/ballerina-rest-service/raw/master/images/helloService_Composer.png)
-
-
-### <a name="running-in-intellij"></a> Running in Intellij IDEA
-(This is an optional step to familiarize Ballerina Intellij IDEA Plugin)
-
-Refer https://github.com/ballerinalang/plugin-intellij/tree/master/getting-started to setup your IntelliJ IDEA environment for Ballerina.
-Open hello-ballerina project in IntelliJ IDEA and run helloService.bal
-
-![alt text](https://github.com/lasinducharith/ballerina-rest-service/raw/master/images/helloService_IDEA.png)
-
-
-### <a name="running-in-vscode"></a> Running in VSCode
-(This is an optional step to familiarize Ballerina VSCode Plugin)
-
-At the moment VSCode cannot run a ballerina program from the IDE.
 
 ## <a name="testing-service"></a> Testing the service
 
@@ -174,7 +160,7 @@ function testHelloService () {
 The test package contains functions to start a service and assert results. The test case start the helloService and sends a sample get request to the HTTP endpoint.
 It also asserts if the response payload matches the expected result, using test function **assertStringEquals**.
 
-#### Running Test case
+#### Running test case
 
 ```
 $ballerina test services/
@@ -189,7 +175,7 @@ result:
 tests run: 1, passed: 1, failed: 0
 ```
 
-#### Running Test case using .balx
+#### Running test case using .balx
 
 ```
 $ballerina build services/
@@ -248,7 +234,7 @@ ballerina: started HTTP/WS server connector 0.0.0.0:9090
 ```
 
 
-### <a name="deploying-on-cloud-foundry"></a> Deploying on Cloud Foundry
+### <a name="deploying-on-kubernetes"></a> Deploying on Kubernetes
 <TODO>
 
 
